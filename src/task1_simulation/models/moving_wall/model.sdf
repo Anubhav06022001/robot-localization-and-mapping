@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<sdf version="1.6">
+  <model name="moving_wall">
+    <static>false</static>
+
+    <pose>0 0 1.5 0 0 0</pose>
+
+    <link name="wall_link">
+      <inertial>
+        <mass>100.0</mass>
+        <inertia>
+          <ixx>34.17</ixx>
+          <iyy>34.17</iyy>
+          <izz>3.33</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.3 1.0 1.5</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.3 1.0 1.5</size>
+          </box>
+        </geometry>
+      </visual>
+    </link>
+
+    <plugin name="moving_wall_plugin"
+            filename="libmoving_wall_plugin.so"/>
+  </model>
+</sdf>

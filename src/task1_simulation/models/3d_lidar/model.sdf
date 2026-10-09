@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+<sdf version="1.6">
+  <model name="lidar_3d_16">
+
+    <static>false</static>
+
+    <link name="lidar_link">
+
+      <pose>0 0 0 0 0 0</pose>
+
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.0001</ixx>
+          <iyy>0.0001</iyy>
+          <izz>0.0001</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <radius>0.03</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.03</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+      </visual>
+
+      <sensor name="lidar_3d_16" type="ray">
+
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+
+        <ray>
+
+          <scan>
+
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159265</min_angle>
+              <max_angle>3.14159265</max_angle>
+            </horizontal>
+
+            <vertical>
+              <samples>16</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.261799</min_angle>
+              <max_angle>0.261799</max_angle>
+            </vertical>
+
+          </scan>
+
+          <range>
+            <min>0.12</min>
+            <max>20.0</max>
+            <resolution>0.01</resolution>
+          </range>
+
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise>
+
+        </ray>
+
+        <plugin
+          name="lidar_3d_plugin"
+          filename="libgazebo_ros_ray_sensor.so">
+
+          <ros>
+            <remapping>~/out:=points</remapping>
+          </ros>
+
+          <output_type>sensor_msgs/PointCloud2</output_type>
+          <frame_name>lidar_3d_link</frame_name>
+
+        </plugin>
+
+      </sensor>
+
+    </link>
+
+  </model>
+</sdf>

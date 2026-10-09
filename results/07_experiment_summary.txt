@@ -1,0 +1,40 @@
+PACE ROBOTICS TAKE-HOME — EXPERIMENT SUMMARY
+
+Trajectory samples: 6203
+Trajectory time: 7.779 s -> 309.155 s
+
+Ground-truth displacement:
+  start = (-8.000, -0.000)
+  end   = (-2.917, -1.845)
+
+Slipping odometry:
+  start = (-8.009, 0.000)
+  end   = (1.405, -0.932)
+  final position error = 4.4179 m
+  RMSE = 2.0841 m
+
+EKF fused:
+  start = (-8.010, -0.000)
+  end   = (-6.070, 2.762)
+  final position error = 5.5827 m
+  RMSE = 2.0901 m
+
+EKF final covariance:
+  Pxx  = 188.99
+  Pyy  = 953.52
+  Pyaw = 100.357
+
+Scan degeneracy:
+  samples = 2891
+  degenerate samples = 2891
+  degenerate fraction = 1.000
+  warning rows = 1
+  final Ixx = 0
+  final Iyy = 179
+  final Iyaw = 1691.45
+  maximum condition number = 1.57842e+13
+
+Map updates:
+  samples = 3036
+  total removed-cell count = 158178
+  maximum removed in one update = 770
