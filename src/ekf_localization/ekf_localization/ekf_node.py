@@ -146,18 +146,71 @@ class EKFLocalization(Node):
         self.predict(dt)
 
         # ------------------------------------------------------------
-        # Velocity measurement update
+        # Odometry measurement updates
         # ------------------------------------------------------------
 
         measured_velocity = msg.twist.twist.linear.x
-
         self.update_velocity(measured_velocity)
 
+        measured_x = msg.pose.pose.position.x
+        measured_y = msg.pose.pose.position.y
+
+        q = msg.pose.pose.orientation
+        measured_yaw = 2.0 * np.arctan2(q.z, q.w)
+
+        self.update_pose(measured_x, measured_y, measured_yaw)
+        
+        
         # ------------------------------------------------------------
         # Publish
         # ------------------------------------------------------------
 
         self.publish_state(msg.header.stamp)
+        
+        
+    # ================================================================
+    # POSE UPDATE
+    # ================================================================
+
+    def update_pose(self, measured_x, measured_y, measured_yaw):
+
+        H = np.zeros((3, 5))
+        H[0, 0] = 1.0
+        H[1, 1] = 1.0
+        H[2, 2] = 1.0
+
+        z = np.array([
+            measured_x,
+            measured_y,
+            measured_yaw
+        ])
+
+        innovation = z - self.x[:3]
+
+        # Wrap yaw innovation to [-pi, pi]
+        innovation[2] = np.arctan2(
+            np.sin(innovation[2]),
+            np.cos(innovation[2])
+        )
+
+        R_pose = np.diag([
+            0.10 ** 2,
+            0.10 ** 2,
+            0.05 ** 2
+        ])
+
+        S = H @ self.P @ H.T + R_pose
+        K = self.P @ H.T @ np.linalg.inv(S)
+
+        self.x = self.x + K @ innovation
+
+        I = np.eye(5)
+        self.P = (
+            (I - K @ H) @ self.P @ (I - K @ H).T
+            + K @ R_pose @ K.T
+        )
+
+        self.P = 0.5 * (self.P + self.P.T)
 
     # ================================================================
     # PREDICTION

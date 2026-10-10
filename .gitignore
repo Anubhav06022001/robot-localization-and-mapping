@@ -3,3 +3,7 @@ install/
 log/
 __pycache__/
 *.pyc
+/data2/
+/data_old/
+/video/pace_video1_old.mp4
+/video/crop_video_top.py
