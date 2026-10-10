@@ -167,12 +167,12 @@ sensor streams required by the localization and mapping pipeline.
 <p align="center">
   <img src="results/task1.png" width="850" alt="Gazebo Classic corridor simulation with the differential-drive robot and moving wall" />
   <br />
-  <em>Figure 1. Gazebo Classic corridor environment showing the laterally moving wall.</em>
+  <em>Figure 1. Gazebo Classic corridor environment showing the laterally moving wall and turtlebot robot.</em>
 </p>
 
 The next stage introduces controlled degradation into the odometry and IMU
 measurements and uses an EKF to estimate the robot state.
-
+ 
 
 
 
